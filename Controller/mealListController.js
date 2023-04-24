@@ -1,20 +1,11 @@
 import expressHandler from "express-async-handler";
 import MealList from "../models/mealList.js";
-import { getUser } from "../Controller/addUserController.js";
 
 // console.log(getUser);
 const getMealList = expressHandler(async (req, res) => {
   let { page, limit } = req.query;
-  // const skip = (page - 1) * 2;
   const skip = page > 0 ? (page - 1) * 31 : 0;
 
-  // if (!page) {
-  //   page = 1;
-  // }
-
-  // if (!limit) {
-  //   limit = 31;
-  // }
   const allMealList = await MealList.find().skip(skip).limit(limit);
 
   if (!allMealList) {
@@ -26,7 +17,7 @@ const getMealList = expressHandler(async (req, res) => {
 const postMealList = expressHandler(async (req, res) => {
   const currentDate = new Date();
   const day = currentDate.getDate();
-  const month = currentDate.getMonth() + 1; // Months are zero-indexed
+  const month = currentDate.getMonth() + 1;
   const year = currentDate.getFullYear();
 
   const newMeal = await MealList.insertMany({
@@ -54,7 +45,7 @@ const getOneMealList = expressHandler(async (req, res) => {
 const updateOneMealList = expressHandler(async (req, res) => {
   const currentDate = new Date();
   const day = currentDate.getDate();
-  const month = currentDate.getMonth() + 1; // Months are zero-indexed
+  const month = currentDate.getMonth() + 1;
   const year = currentDate.getFullYear();
   const updateMealList = await MealList.findByIdAndUpdate(
     req.params.id,
