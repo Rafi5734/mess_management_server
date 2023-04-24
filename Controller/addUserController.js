@@ -2,6 +2,7 @@ import expressHandler from "express-async-handler";
 import User from "../models/user.js";
 const getUser = expressHandler(async (req, res) => {
   const users = await User.find();
+  console.log(users.length);
 
   if (!users) {
     res.status(404).json({ error: "User not found" });
