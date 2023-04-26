@@ -7,6 +7,7 @@ import { addUserRouter } from "./Routes/addUserRoutes.js";
 import { mealListRouter } from "./Routes/mealListRoutes.js";
 import cors from "cors";
 import { bazarListRouter } from "./Routes/bazarListRoute.js";
+import { depositListRouter } from "./Routes/depositListRoute.js";
 const app = express();
 dotenv.config();
 const PORT = process.env.PORT || 8888;
@@ -20,6 +21,7 @@ connectDB();
 app.use("/add_user", addUserRouter);
 app.use("/meal_list", mealListRouter);
 app.use("/bazar_list", bazarListRouter);
+app.use("/deposit_list", depositListRouter);
 
 app.listen(PORT, function () {
   console.log("listen on port " + PORT);
