@@ -57,6 +57,8 @@ const updateUser = expressHandler(async (req, res) => {
   }
   res.status(200).json(userUpdate);
 });
+
+
 const deleteUser = expressHandler(async (req, res) => {
   const userDelete = await User.findByIdAndDelete(req.params.id);
 
