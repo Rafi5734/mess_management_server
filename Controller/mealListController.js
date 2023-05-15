@@ -24,13 +24,13 @@ const postMealList = expressHandler(async (req, res) => {
     date: `${day}/${month}/${year}`,
     allMeal: req.body,
   });
-
   // console.log(req.body);
-
   if (!newMeal) {
     res.status(500).json({ message: "New meal not added" });
   }
   res.status(200).json(newMeal);
+
+  
 });
 
 const getOneMealList = expressHandler(async (req, res) => {
