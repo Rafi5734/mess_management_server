@@ -3,8 +3,15 @@ import MealList from "../models/mealList.js";
 
 // console.log(getUser);
 const getMealList = expressHandler(async (req, res) => {
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth();
+  const nextMonth = (currentMonth + 1) % 12;
+  const firstDayOfNextMonth = new Date(currentDate.getFullYear(), nextMonth, 1);
+  const lastDayOfCurrentMonth = new Date(firstDayOfNextMonth.getTime() - 1);
+  const totalDays = lastDayOfCurrentMonth.getDate();
+
   let { page, limit } = req.query;
-  const skip = page > 0 ? (page - 1) * 31 : 0;
+  const skip = page > 0 ? (page - 1) * totalDays : 0;
 
   const allMealList = await MealList.find().skip(skip).limit(limit);
 
