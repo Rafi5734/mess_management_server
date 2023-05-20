@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-const mongoDB_URL = `mongodb+srv://Amar_Basha:6p8IzICIKu0RiXLs@cluster0.viq6r.mongodb.net/user`;
+import mongoDB_URL from "../dbConfig.js";
 // import MONGODB_URL from "../config.js"
 
 const connectDB = async () => {
