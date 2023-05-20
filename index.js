@@ -25,13 +25,6 @@ app.use("/meal_list", mealListRouter);
 app.use("/bazar_list", bazarListRouter);
 app.use("/deposit_list", depositListRouter);
 
-// app.use("/api/images", router);
-
-// // Error handling middleware
-// app.use((err, req, res, next) => {
-//   console.error(err);
-//   res.status(500).json({ error: "Internal server error" });
-// });
 
 
 app.listen(PORT, function () {
