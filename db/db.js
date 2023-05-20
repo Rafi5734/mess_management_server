@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import mongoDB_URL from "../dbConfig.js";
 // import MONGODB_URL from "../config.js"
-
 const connectDB = async () => {
   try {
     const client = await mongoose.connect(mongoDB_URL, {

@@ -1,6 +1,6 @@
 import express from "express";
 import models from "./models/index.js";
-import dotenv from "dotenv";
+import "dotenv/config";
 import cookieParser from "cookie-parser";
 import connectDB from "./db/db.js";
 import { addUserRouter } from "./Routes/addUserRoutes.js";
@@ -10,12 +10,15 @@ import { bazarListRouter } from "./Routes/bazarListRoute.js";
 import { depositListRouter } from "./Routes/depositListRoute.js";
 // import { router } from "./Routes/uploadImageRoute.js";
 const app = express();
-dotenv.config();
+// dotenv.config();
 const PORT = process.env.PORT || 8888;
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.static("public"));
 app.use(cors());
+
+
+
 
 // Connect to MongoDB
 connectDB();
