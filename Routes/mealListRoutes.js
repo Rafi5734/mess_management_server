@@ -5,11 +5,13 @@ import {
   getOneMealList,
   updateOneMealList,
   deleteOneMealList,
+  deleteManyData,
 } from "../Controller/mealListController.js";
 
 const mealListRouter = express.Router();
 
 mealListRouter.route("/").post(postMealList).get(getMealList);
+mealListRouter.route("/delete_previous").delete(deleteManyData);
 mealListRouter
   .route("/:id")
   .get(getOneMealList)

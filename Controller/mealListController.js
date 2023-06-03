@@ -1,24 +1,15 @@
 import expressHandler from "express-async-handler";
 import MealList from "../models/mealList.js";
 
-// console.log(getUser);
+
 const getMealList = expressHandler(async (req, res) => {
-  const currentDate = new Date();
-  const currentMonth = currentDate.getMonth();
-  const nextMonth = (currentMonth + 1) % 12;
-  const firstDayOfNextMonth = new Date(currentDate.getFullYear(), nextMonth, 1);
-  const lastDayOfCurrentMonth = new Date(firstDayOfNextMonth.getTime() - 1);
-  const totalDays = lastDayOfCurrentMonth.getDate();
-
-  let { page, limit } = req.query;
-  const skip = page > 0 ? (page - 1) * totalDays : 0;
-
-  const allMealList = await MealList.find().skip(skip).limit(limit);
+  const allMealList = await MealList.find();
 
   if (!allMealList) {
     res.status(404).json({ message: "Meal List not found" });
+  } else {
+    res.status(200).json(allMealList);
   }
-  res.status(200).json(allMealList);
 });
 
 const postMealList = expressHandler(async (req, res) => {
@@ -31,13 +22,10 @@ const postMealList = expressHandler(async (req, res) => {
     date: `${day}/${month}/${year}`,
     allMeal: req.body,
   });
-  // console.log(req.body);
   if (!newMeal) {
     res.status(500).json({ message: "New meal not added" });
   }
   res.status(200).json(newMeal);
-
-  
 });
 
 const getOneMealList = expressHandler(async (req, res) => {
@@ -81,10 +69,33 @@ const deleteOneMealList = expressHandler(async (req, res) => {
   res.status(200).json(oneMealListDelete);
 });
 
+const deleteManyData = expressHandler(async (req, res) => {
+  try {
+    const filters = req.body;
+
+    // console.log(filters);
+    const result = await MealList.deleteMany({ $or: filters });
+
+    if (result.deletedCount > 0) {
+      res
+        .status(200)
+        .json({ message: "Previous month data deleted successfully." });
+    } else {
+      res.status(404).json({ message: "No data found for deletion." });
+    }
+  } catch (error) {
+    console.error("Error deleting previous month data:", error);
+    res.status(500).json({
+      message: "An error occurred while deleting previous month data.",
+    });
+  }
+});
+
 export {
   postMealList,
   getMealList,
   getOneMealList,
   updateOneMealList,
   deleteOneMealList,
+  deleteManyData,
 };
