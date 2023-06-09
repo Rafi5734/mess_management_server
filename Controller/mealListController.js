@@ -38,14 +38,14 @@ const getOneMealList = expressHandler(async (req, res) => {
 });
 
 const updateOneMealList = expressHandler(async (req, res) => {
-  const currentDate = new Date();
-  const day = currentDate.getDate();
-  const month = currentDate.getMonth() + 1;
-  const year = currentDate.getFullYear();
+  // const currentDate = new Date();
+  // const day = currentDate.getDate();
+  // const month = currentDate.getMonth() + 1;
+  // const year = currentDate.getFullYear();
   const updateMealList = await MealList.findByIdAndUpdate(
     req.params.id,
     {
-      date: `${day}/${month}/${year}`,
+      // date: `${day}/${month}/${year}`,
       allMeal: req.body,
     },
     {
