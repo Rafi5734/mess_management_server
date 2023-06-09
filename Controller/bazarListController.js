@@ -68,10 +68,33 @@ const deleteOneBazarList = expressHandler(async (req, res) => {
   res.status(200).json(oneBazarListDelete);
 });
 
+const deleteManyBazarData = expressHandler(async (req, res) => {
+  try {
+    const filters = req.body;
+
+    // console.log(filters);
+    const result = await BazarList.deleteMany({ $or: filters });
+
+    if (result.deletedCount > 0) {
+      res
+        .status(200)
+        .json({ message: "Previous month data deleted successfully." });
+    } else {
+      res.status(404).json({ message: "No data found for deletion." });
+    }
+  } catch (error) {
+    console.error("Error deleting previous month data:", error);
+    res.status(500).json({
+      message: "An error occurred while deleting previous month data.",
+    });
+  }
+});
+
 export {
   postBazarList,
   getBazarList,
   getOneBazarList,
   updateOneBazarList,
   deleteOneBazarList,
+  deleteManyBazarData,
 };
