@@ -43,13 +43,12 @@ const getOneDepositList = expressHandler(async (req, res) => {
 
 const updateOneDepositList = expressHandler(async (req, res) => {
   const currentDate = new Date();
-  const day = currentDate.getDate();
-  const month = currentDate.getMonth() + 1;
-  const year = currentDate.getFullYear();
+  // const day = currentDate.getDate();
+  // const month = currentDate.getMonth() + 1;
+  // const year = currentDate.getFullYear();
   const updateDepositList = await DepositList.findByIdAndUpdate(
     req.params.id,
     {
-      date: `${day}/${month}/${year}`,
       name: req.body.name,
       deposit_amount: req.body.deposit_amount,
       extra_amount: req.body.extra_amount,
@@ -80,25 +79,27 @@ const deleteOneDepositList = expressHandler(async (req, res) => {
 
 const deleteManyDepositData = expressHandler(async (req, res) => {
   try {
-    const filters = req.body;
+    const idsToDelete = req.body;
 
-    // console.log(filters);
-    const result = await DepositList.deleteMany({ $or: filters });
+    const result = await DepositList.deleteMany({ _id: { $in: idsToDelete } });
+
+    console.log(result);
 
     if (result.deletedCount > 0) {
-      res
-        .status(200)
-        .json({ message: "Previous month data deleted successfully." });
+      res.status(200).json({ message: "Data deleted successfully." });
     } else {
       res.status(404).json({ message: "No data found for deletion." });
     }
   } catch (error) {
-    console.error("Error deleting previous month data:", error);
+    console.error("Error deleting data:", error);
     res.status(500).json({
-      message: "An error occurred while deleting previous month data.",
+      message: "An error occurred while deleting the data.",
     });
   }
 });
+
+
+
 
 export {
   postDepositList,
