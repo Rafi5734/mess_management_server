@@ -9,6 +9,23 @@ const getUser = expressHandler(async (req, res) => {
   }
   res.status(200).json(users);
 });
+const postAdmin = expressHandler(async (req, res) => {
+  const adminUser = await User.insertMany({
+    userName: req.body.userName,
+    email: req.body.email,
+    phone: req.body.phone,
+    category: req.body.category,
+    status: req.body.status,
+    working_place: req.body.working_place,
+    password: req.body.password,
+  });
+
+  if (!adminUser) {
+    res.status(500).json({ message: "Admin not inserted" });
+  }
+  res.status(200).json(adminUser);
+});
+
 const postUser = expressHandler(async (req, res) => {
   const user = await User.insertMany({
     userName: req.body.userName,
@@ -58,7 +75,6 @@ const updateUser = expressHandler(async (req, res) => {
   res.status(200).json(userUpdate);
 });
 
-
 const deleteUser = expressHandler(async (req, res) => {
   const userDelete = await User.findByIdAndDelete(req.params.id);
 
@@ -69,4 +85,4 @@ const deleteUser = expressHandler(async (req, res) => {
   }
 });
 
-export { getUser, postUser, getOneUser, updateUser, deleteUser };
+export { getUser, postUser, getOneUser, updateUser, deleteUser, postAdmin };
